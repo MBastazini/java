@@ -11,7 +11,7 @@ import Controller.AnimalController;
  * @author ra2257006
  */
 public class ViewForm extends javax.swing.JFrame {
-
+    private int id;
     /**
      * Creates new form ViewForm
      */
@@ -79,17 +79,23 @@ public class ViewForm extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Espécie", "Raça", "Gênero", "Disponível", "Informações adicionais"
+                "Espécie", "Raça", "Gênero", "Disponível", "Informações adicionais", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tblAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAnimalMouseClicked(evt);
+            }
+        });
+
         jScrollPane1.setViewportView(tblAnimal);
 
         txaInfo.setColumns(20);
@@ -222,18 +228,34 @@ public class ViewForm extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         AnimalController controller = new AnimalController();
-        controller.atualizarAnimal(tblAnimal.getSelectedRow(), txtGenero.getText(), txtEspecie.getText(), txtRaca.getText(), chkDisponivel.isSelected(), txaInfo.getText());
+        controller.atualizarAnimal(id, txtGenero.getText(), txtEspecie.getText(), txtRaca.getText(), chkDisponivel.isSelected(), txaInfo.getText());
+        controller.pesquisarAnimal(txtGenero.getText(), txtEspecie.getText(), txtRaca.getText(), chkDisponivel.isSelected(), txaInfo.getText(), tblAnimal);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         AnimalController controller = new AnimalController();
         controller.cadastrarAnimal(txtGenero.getText(), txtEspecie.getText(), txtRaca.getText(), chkDisponivel.isSelected(), txaInfo.getText());
+        controller.pesquisarAnimal(txtGenero.getText(), txtEspecie.getText(), txtRaca.getText(), chkDisponivel.isSelected(), txaInfo.getText(), tblAnimal);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         AnimalController controller = new AnimalController();
-        controller.deletarAnimal(tblAnimal.getSelectedRow());
+        controller.deletarAnimal(id);
+        controller.listarAnimais(tblAnimal);
     }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void tblAnimalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnimalMouseClicked
+        int linha = tblAnimal.getSelectedRow();
+        if (linha != -1) {
+            txtEspecie.setText(tblAnimal.getValueAt(linha, 0).toString());
+            txtRaca.setText(tblAnimal.getValueAt(linha, 1).toString());
+            txtGenero.setText(tblAnimal.getValueAt(linha, 2).toString());
+            chkDisponivel.setSelected((boolean) tblAnimal.getValueAt(linha, 3));
+            txaInfo.setText(tblAnimal.getValueAt(linha, 4).toString());
+            id = (int) tblAnimal.getValueAt(linha, 5);
+        }
+    
+    }//GEN-LAST:event_tblAnimalMouseClicked
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         AnimalController controller = new AnimalController();

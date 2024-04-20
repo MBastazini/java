@@ -24,7 +24,7 @@ public class AnimalDAO {
     }
 
     public ArrayList<AnimalDTO> listarAnimais() {
-        try (PreparedStatement stmt = ConexaoDAO.getConnection().prepareStatement("SELECT * FROM animal")) {
+        try (PreparedStatement stmt = ConexaoDAO.getConnection().prepareStatement("SELECT * FROM animal ORDER BY id")) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 AnimalDTO animal = new AnimalDTO(rs.getInt("id"), rs.getString("genero"), rs.getString("especie"), rs.getString("raca"), rs.getBoolean("disponivel"), rs.getString("informacoesAdicionais"));

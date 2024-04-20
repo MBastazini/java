@@ -32,7 +32,6 @@ public class AnimalController {
         model.setNumRows(0);
         try {
             for (AnimalDTO animal : animais) {
-                JOptionPane.showMessageDialog(null, animal.getGenero().equals(genero) + " " + animal.getGenero() + " " + genero);
                 boolean valido = (animal.getGenero().equals(genero) || genero.equals(""))
                         && (animal.getEspecie().equals(especie) || especie.equals(""))
                         && (animal.getRaca().equals(raca) || raca.equals(""))
@@ -40,7 +39,7 @@ public class AnimalController {
                         && (animal.getInformacoesAdicionais().equals(informacoesAdicionais) || informacoesAdicionais.equals(""));
 
                 if (valido) {
-                    model.addRow(new Object[]{animal.getGenero(), animal.getEspecie(), animal.getRaca(), animal.isDisponivel(), animal.getInformacoesAdicionais()});
+                    model.addRow(new Object[]{animal.getEspecie(), animal.getRaca(), animal.getGenero(), animal.isDisponivel(), animal.getInformacoesAdicionais(), animal.getId()});
                 }
             }
         } catch (Exception e) {
@@ -55,7 +54,7 @@ public class AnimalController {
         model.setNumRows(0);
         try {
             for (AnimalDTO animal : animais) {
-                model.addRow(new Object[]{animal.getGenero(), animal.getEspecie(), animal.getRaca(), animal.isDisponivel(), animal.getInformacoesAdicionais()});
+                model.addRow(new Object[]{animal.getEspecie(), animal.getRaca(), animal.getGenero(), animal.isDisponivel(), animal.getInformacoesAdicionais(), animal.getId()});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao listar animais: " + e.getMessage());

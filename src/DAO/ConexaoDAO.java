@@ -14,8 +14,9 @@ public class ConexaoDAO {
         Connection conexao = null;
         try {
             return DriverManager.getConnection(stringConexao, usuario, senha);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Erro ao conectar com o banco de dados: " + e.getMessage());
+            return null;
         }
     }
 }
