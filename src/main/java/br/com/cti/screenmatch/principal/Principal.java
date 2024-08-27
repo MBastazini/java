@@ -71,8 +71,8 @@ public class Principal {
             System.out.println("Erro ao salvar no banco de dados - possivelmente duplicado");
             System.out.print("\n\n");
         }
-        String dadosFormatados = String.format("Título: %s\nTotal de temporadas: %d\nAvaliação: %.1f\nGênero: %s\nAtores: %s\nPoster: %s\nSinopse: %s\nDiretor: %s",
-                serie.getTitulo(), serie.getTotalTemporadas(), serie.getAvaliacao(), serie.getGenero(), serie.getAtores(), serie.getPoster(), serie.getSinopse(), serie.getDiretor());
+        String dadosFormatados = String.format("---> %s [ %s ] ---< \n\nTotal de temporadas: %d\nAvaliação: %.1f\nGênero: %s\nAtores: %s\nPoster: %s\nSinopse: %s\n --> =========== <---",
+                serie.getTitulo(), serie.getAno(), serie.getTotalTemporadas(), serie.getAvaliacao(), serie.getGenero(), serie.getAtores(), serie.getPoster(), serie.getSinopse());
         System.out.println(dadosFormatados);
         System.out.print("\n");
     }
@@ -89,7 +89,13 @@ public class Principal {
         DadosSerie dadosSerie = getDadosSerie();
         List<DadosTemporada> temporadas = new ArrayList<>();
 
-        for (int i = 1; i <= dadosSerie.totalTemporadas(); ++i) {
+        int totalTemporadas = (dadosSerie.totalTemporadas() == null ? 0 : dadosSerie.totalTemporadas());
+
+        if(totalTemporadas == 0){
+            System.out.println("Serie não tem temporadas.");
+        }
+
+        for (int i = 1; i <= totalTemporadas; ++i) {
             var json = consumo.obterDados(ENDERECO + dadosSerie.titulo().replace(" ", "+") + "&season=" + i + API_KEY);
             DadosTemporada dadosTemporada = conversor.obterDados(json, DadosTemporada.class);
             temporadas.add(dadosTemporada);

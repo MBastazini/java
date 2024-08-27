@@ -6,7 +6,7 @@ import java.util.OptionalDouble;
 
 @Entity
 @Table(name = "series")
-public class Serie {
+public class Serie{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,17 +21,18 @@ public class Serie {
     private String atores;
     private String poster;
     private String sinopse;
-    private String diretor;
+    private String ano;
+
 
     public Serie(DadosSerie dadosSerie){
         this.titulo = dadosSerie.titulo();
-        this.totalTemporadas = dadosSerie.totalTemporadas();
+        this.totalTemporadas = (dadosSerie.totalTemporadas() == null ? 0 : dadosSerie.totalTemporadas());
         this.avaliacao = OptionalDouble.of(Double.valueOf(dadosSerie.avaliacao())).orElse(0);
         this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.poster();
         this.sinopse = dadosSerie.sinopse().trim();
-        this.diretor = dadosSerie.diretor();
+        this.ano = dadosSerie.year();
 
     }
 
@@ -99,12 +100,12 @@ public class Serie {
         this.sinopse = sinopse;
     }
 
-    public String getDiretor() {
-        return diretor;
+    public String getAno() {
+        return ano;
     }
 
-    public void setDiretor(String diretor) {
-        this.diretor = diretor;
+    public void setAno(String ano) {
+        this.ano = ano;
     }
 
     @Override
@@ -118,7 +119,7 @@ public class Serie {
                         ", atores='" + atores + '\'' +
                         ", poster='" + poster + '\'' +
                         ", sinopse='" + sinopse + '\'' +
-                        ", diretor='" + diretor + '\'';
+                        ", ano='" + ano + '\'';
 
     }
 }
